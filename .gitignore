@@ -7,3 +7,5 @@ public/lib
 app/tests/coverage/
 .bower-*/
 .idea/
+LICENSE.md
+README.md
