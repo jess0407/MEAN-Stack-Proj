@@ -1,0 +1,29 @@
+<section data-ng-controller="PostsController">
+    <div class="page-header">
+        <h1>Post News</h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="title">Title</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="title" id="title" class="form-control" placeholder="title" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="link">Link</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="link" id="link" class="form-control" placeholder="link" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+            </fieldset>
+        </form>
+    </div>
+</section>
