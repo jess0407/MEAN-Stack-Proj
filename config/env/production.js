@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db:'mongodb://dnews:dnewsPass@ds039331.mongolab.com:39331/dnews'|| process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/dnews',
+	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/dnews',
 	assets: {
 		lib: {
 			css: [
