@@ -1,0 +1,24 @@
+<section data-ng-controller="RewardsController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1 data-ng-bind="reward.reward"></h1>
+	</div>
+	<div><span>{{reward.class}}:{{reward.value}}</span> <p>
+		{{reward.milestone}}
+	</p></div>
+	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == reward.user._id))">
+		<a class="btn btn-primary" href="/#!/rewards/{{reward._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	<small>
+		<em class="text-muted">
+			Added on
+			<span data-ng-bind="reward.created | date:'mediumDate'"></span>
+			by
+			<span data-ng-bind="reward.user.displayName"></span>
+		</em>
+	</small>
+</section>

@@ -1,0 +1,47 @@
+<section data-ng-controller="RewardsController">
+    <div class="page-header">
+        <h1>New Reward</h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="reward">Reward</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="reward" id="reward" class="form-control" placeholder="reward" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="class">Class</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="class" id="class" class="form-control" placeholder="class" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="value">Value</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="value" id="value" class="form-control" placeholder="value" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="milestone">Milestone</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="milestone" id="milestone" class="form-control" placeholder="milestone" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="redeemed">redeemed</label>
+                    <div class="controls">
+                        <input type="checkbox" data-ng-model="redeemed" id="redeemed" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default">
+                </div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+            </fieldset>
+        </form>
+    </div>
+</section>
