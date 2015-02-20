@@ -44,10 +44,6 @@ angular.element(document).ready(function() {
 'use strict';
 
 // Use Applicaion configuration module to register a new module
-ApplicationConfiguration.registerModule('articles');
-'use strict';
-
-// Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('core');
 'use strict';
 
@@ -55,116 +51,12 @@ ApplicationConfiguration.registerModule('core');
 ApplicationConfiguration.registerModule('posts');
 'use strict';
 
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('rewards');
+'use strict';
+
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('users');
-'use strict';
-
-// Configuring the Articles module
-angular.module('articles').run(['Menus',
-	function(Menus) {
-		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Articles', 'articles', 'dropdown', '/articles(/create)?');
-		Menus.addSubMenuItem('topbar', 'articles', 'List Articles', 'articles');
-		Menus.addSubMenuItem('topbar', 'articles', 'New Article', 'articles/create');
-	}
-]);
-'use strict';
-
-// Setting up route
-angular.module('articles').config(['$stateProvider',
-	function($stateProvider) {
-		// Articles state routing
-		$stateProvider.
-		state('listArticles', {
-			url: '/articles',
-			templateUrl: 'modules/articles/views/list-articles.client.view.html'
-		}).
-		state('createArticle', {
-			url: '/articles/create',
-			templateUrl: 'modules/articles/views/create-article.client.view.html'
-		}).
-		state('viewArticle', {
-			url: '/articles/:articleId',
-			templateUrl: 'modules/articles/views/view-article.client.view.html'
-		}).
-		state('editArticle', {
-			url: '/articles/:articleId/edit',
-			templateUrl: 'modules/articles/views/edit-article.client.view.html'
-		});
-	}
-]);
-'use strict';
-
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
-		$scope.authentication = Authentication;
-
-		$scope.create = function() {
-			var article = new Articles({
-				title: this.title,
-				content: this.content
-			});
-			article.$save(function(response) {
-				$location.path('articles/' + response._id);
-
-				$scope.title = '';
-				$scope.content = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		$scope.remove = function(article) {
-			if (article) {
-				article.$remove();
-
-				for (var i in $scope.articles) {
-					if ($scope.articles[i] === article) {
-						$scope.articles.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.article.$remove(function() {
-					$location.path('articles');
-				});
-			}
-		};
-
-		$scope.update = function() {
-			var article = $scope.article;
-
-			article.$update(function() {
-				$location.path('articles/' + article._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		$scope.find = function() {
-			$scope.articles = Articles.query();
-		};
-
-		$scope.findOne = function() {
-			$scope.article = Articles.get({
-				articleId: $stateParams.articleId
-			});
-		};
-	}
-]);
-'use strict';
-
-//Articles service used for communicating with the articles REST endpoints
-angular.module('articles').factory('Articles', ['$resource',
-	function($resource) {
-		return $resource('articles/:articleId', {
-			articleId: '@_id'
-		}, {
-			update: {
-				method: 'PUT'
-			}
-		});
-	}
-]);
 'use strict';
 
 // Setting up route
@@ -496,6 +388,126 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 angular.module('posts').factory('Posts', ['$resource',
 	function($resource) {
 		return $resource('posts/:postId', { postId: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
+			}
+		});
+	}
+]);
+'use strict';
+
+// Configuring the Articles module
+angular.module('rewards').run(['Menus',
+	function(Menus) {
+		// Set top bar menu items
+		Menus.addMenuItem('topbar', 'Rewards', 'rewards', 'dropdown', '/rewards(/create)?');
+		Menus.addSubMenuItem('topbar', 'rewards', 'List Rewards', 'rewards');
+		Menus.addSubMenuItem('topbar', 'rewards', 'New Reward', 'rewards/create');
+	}
+]);
+'use strict';
+
+//Setting up route
+angular.module('rewards').config(['$stateProvider',
+	function($stateProvider) {
+		// Rewards state routing
+		$stateProvider.
+		state('listRewards', {
+			url: '/rewards',
+			templateUrl: 'modules/rewards/views/list-rewards.client.view.html'
+		}).
+		state('createReward', {
+			url: '/rewards/create',
+			templateUrl: 'modules/rewards/views/create-reward.client.view.html'
+		}).
+		state('viewReward', {
+			url: '/rewards/:rewardId',
+			templateUrl: 'modules/rewards/views/view-reward.client.view.html'
+		}).
+		state('editReward', {
+			url: '/rewards/:rewardId/edit',
+			templateUrl: 'modules/rewards/views/edit-reward.client.view.html'
+		});
+	}
+]);
+'use strict';
+
+// Rewards controller
+angular.module('rewards').controller('RewardsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Rewards',
+	function($scope, $stateParams, $location, Authentication, Rewards) {
+		$scope.authentication = Authentication;
+
+		// Create new Reward
+		$scope.create = function() {
+			// Create new Reward object
+			var reward = new Rewards ({
+				reward: this.reward,
+				class: this.class,
+				value: this.value,
+				milestone: this.milestone,
+				redeemed: this.redeemed
+			});
+
+			// Redirect after save
+			reward.$save(function(response) {
+				$location.path('rewards/' + response._id);
+
+				// Clear form fields
+				$scope.name = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		// Remove existing Reward
+		$scope.remove = function(reward) {
+			if ( reward ) {
+				reward.$remove();
+
+				for (var i in $scope.rewards) {
+					if ($scope.rewards [i] === reward) {
+						$scope.rewards.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.reward.$remove(function() {
+					$location.path('rewards');
+				});
+			}
+		};
+
+		// Update existing Reward
+		$scope.update = function() {
+			var reward = $scope.reward;
+
+			reward.$update(function() {
+				$location.path('rewards/' + reward._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		// Find a list of Rewards
+		$scope.find = function() {
+			$scope.rewards = Rewards.query();
+		};
+
+		// Find existing Reward
+		$scope.findOne = function() {
+			$scope.reward = Rewards.get({
+				rewardId: $stateParams.rewardId
+			});
+		};
+	}
+]);
+
+'use strict';
+
+//Rewards service used to communicate Rewards REST endpoints
+angular.module('rewards').factory('Rewards', ['$resource',
+	function($resource) {
+		return $resource('rewards/:rewardId', { rewardId: '@_id'
 		}, {
 			update: {
 				method: 'PUT'
