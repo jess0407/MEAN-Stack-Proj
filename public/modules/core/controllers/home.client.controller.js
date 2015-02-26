@@ -7,7 +7,7 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		$scope.authentication = Authentication;
 		if(Authentication.user){
 			console.log(Authentication);
-			$location.path('/rewards')
+			$location.path('/rewards');
 		}
 
 	}
