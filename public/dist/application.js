@@ -505,6 +505,12 @@ angular.module('rewards').controller('RewardsController', ['$scope', '$statePara
 				rewardId: $stateParams.rewardId
 			});
 		};
+
+		// Update redeemed properties
+		$scope.toggleRedeem = function (reward) {
+			reward.redeemed = true;
+			reward.$update(reward);
+		};
 	}
 ]);
 

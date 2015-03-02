@@ -2,9 +2,11 @@
 	<div class="page-header">
 		<h1 data-ng-bind="reward.reward"></h1>
 	</div>
-	<div><span>{{reward.class}}:{{reward.value}}</span> <p>
-		{{reward.milestone}}
-	</p></div>
+	<div>
+		<span>{{reward.class}}: £{{reward.value}}</span>
+		 <p>reward for: {{reward.milestone}}</p>
+		 <p ng-show="reward.redeemed">This reward has been redeemed.</p>
+	</div>
 	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == reward.user._id))">
 		<a class="btn btn-primary" href="/#!/rewards/{{reward._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
