@@ -4,7 +4,7 @@
 angular.module('rewards').controller('RewardsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Rewards',
 	function($scope, $stateParams, $location, Authentication, Rewards) {
 		$scope.authentication = Authentication;
-
+		$scope.userName = Authentication.user.displayName;
 		// Create new Reward
 		$scope.create = function() {
 			// Create new Reward object

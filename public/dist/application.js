@@ -99,7 +99,6 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 		if(Authentication.user){
-			console.log(Authentication);
 			$location.path('/rewards');
 		}
 
@@ -419,6 +418,10 @@ angular.module('rewards').config(['$stateProvider',
 	function($stateProvider) {
 		// Rewards state routing
 		$stateProvider.
+		state('help', {
+			url: '/help',
+			templateUrl: 'modules/rewards/views/help.client.view.html'
+		}).
 		state('listRewards', {
 			url: '/rewards',
 			templateUrl: 'modules/rewards/views/list-rewards.client.view.html'
@@ -439,11 +442,19 @@ angular.module('rewards').config(['$stateProvider',
 ]);
 'use strict';
 
+angular.module('rewards').controller('HelpController', ['$scope',
+	function($scope) {
+		// Controller Logic
+		// ...
+	}
+]);
+'use strict';
+
 // Rewards controller
 angular.module('rewards').controller('RewardsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Rewards',
 	function($scope, $stateParams, $location, Authentication, Rewards) {
 		$scope.authentication = Authentication;
-
+		$scope.userName = Authentication.user.displayName;
 		// Create new Reward
 		$scope.create = function() {
 			// Create new Reward object

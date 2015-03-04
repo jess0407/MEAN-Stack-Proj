@@ -5,6 +5,10 @@ angular.module('rewards').config(['$stateProvider',
 	function($stateProvider) {
 		// Rewards state routing
 		$stateProvider.
+		state('help', {
+			url: '/help',
+			templateUrl: 'modules/rewards/views/help.client.view.html'
+		}).
 		state('listRewards', {
 			url: '/rewards',
 			templateUrl: 'modules/rewards/views/list-rewards.client.view.html'
